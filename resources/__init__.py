@@ -1,0 +1,1 @@
+'''This folder includes resources such as sprite images, sound, fonts, and music'''
