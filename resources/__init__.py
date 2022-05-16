@@ -1,1 +1,1 @@
-'''This folder includes resources such as sprite images, sound, fonts, and music'''
+'''This folder includes main code for sprites and game loop'''
