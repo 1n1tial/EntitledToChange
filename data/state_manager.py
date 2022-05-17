@@ -1,6 +1,6 @@
-
+# class for managing the toggle between states ------------------------------------
 class StateManager():
-    def __init__(self, over=False, state_dict={}, state_name=None, state=None, now=None):
+    def __init__(self):
         self.over = False
         self.state_dict = {}
         self.state = None
@@ -35,6 +35,7 @@ class StateManager():
         self.event.getEvent(event)
 
 
+# define state class -----------------
 class State():
     def __init__(self):
         self.start_time = 0

@@ -1,29 +1,17 @@
 # import --------------------------------------
-from pip import main
+from os import stat
 import pygame, sys
 
-# define game class
-class Game():
-    def __init__(self):
-        self.running = True
-    
-    def run(self):
-        pass
+from data.SETTINGS import *
+from . import controls, prepare
 
-    def play(self):
-        pass
+from states.splash import Splash
 
 
-
-# create game
-mainGame = Game()
-
-# main game loop
-if mainGame.running():
-    mainGame.run()
-mainGame.running = False
-
-
-def quit_game():
-    pygame.quit()
-    sys.exit()
+def mainLoop():
+    game = controls.MainControl(ORIG_CAPTION)
+    state_dict = {
+            'SPLASH': Splash()
+    }
+    game.state_manager.createStateDict(state_dict, 'SPLASH')
+    game.main()

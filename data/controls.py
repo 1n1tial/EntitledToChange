@@ -3,6 +3,8 @@ import pygame, os
 from data import state_manager
 from data.SETTINGS import *
 
+
+# class for controlling the main flow of the game ----------
 class MainControl():
     def __init__(self, caption):
         self.screen = pygame.display.get_surface()
@@ -58,6 +60,7 @@ class MainControl():
             self.draw(lag/STATE_UPDATE_TIME)
 
 
+# basic timer ------------ 
 class Timer():
     def __init__(self, unit_ms, ticks=-1):
         self.unit_ms = unit_ms
@@ -78,7 +81,7 @@ class Timer():
             return True
 
 
-# loading functions
+# loading functions ------------------------------------------------------------
 def load_img(directory, set_colorkey=(COLORKEY), accept_ext=('.png', 'jpg')):
     img_dict = {}
     for img in os.listdr(directory):
