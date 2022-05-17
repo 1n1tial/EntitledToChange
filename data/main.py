@@ -1,11 +1,12 @@
 # import --------------------------------------
-from os import stat
 import pygame, sys
+import os
 
 from data.SETTINGS import *
 from . import controls, prepare
+from state_manager import StateManager
 
-from states.splash import Splash
+from data.states.splash import Splash
 
 
 def mainLoop():

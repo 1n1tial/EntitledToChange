@@ -84,7 +84,7 @@ class Timer():
 # loading functions ------------------------------------------------------------
 def load_img(directory, set_colorkey=(COLORKEY), accept_ext=('.png', 'jpg')):
     img_dict = {}
-    for img in os.listdr(directory):
+    for img in os.listdir(directory):
         name, ext = os.path.splitext(img)
         if ext.lower() in accept_ext:
             loaded_img = pygame.image.load(os.path.join(directory, img))
@@ -101,7 +101,7 @@ def load_img(directory, set_colorkey=(COLORKEY), accept_ext=('.png', 'jpg')):
 def load_music(directory, accept_ext=('.wav', '.ogg', '.mp3')):
     music_dict = {}
     for music in os.listdir(directory):
-        name, ext = os.path.splittext(music)
+        name, ext = os.path.splitext(music)
         if ext.lower() in accept_ext:
             music_dict[name] = os.path.join(directory, music)
         else:
@@ -121,7 +121,7 @@ def load_sfx(directory, accept_ext=('.wav', '.ogg')):
 def load_font(directory, accept_ext=('.ttf')):
     font_dict = {}
     for font in os.listdir(directory):
-        name, ext = os.path.splittext(font)
+        name, ext = os.path.splitext(font)
         if ext.lower() in accept_ext:
             font_dict[name] = os.path.join(directory, font)
         else:

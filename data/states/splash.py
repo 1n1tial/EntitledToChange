@@ -1,7 +1,7 @@
 import pygame as pg
 import os, sys
 
-from SETTINGS import *
+from data.SETTINGS import *
 from data.state_manager import StateManager, State
 
 

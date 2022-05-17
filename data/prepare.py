@@ -1,8 +1,8 @@
-from os import path
+import os
 import pygame as pg
 
 from .SETTINGS import *
-import controls
+from . import controls
 
 pg.init()
 
@@ -10,7 +10,7 @@ pg.init()
 y_offset = (pg.display.Info().current_w - SCREENWIDTH)//2
 os.environ['SDL_VIDEO_WINDOW_POS'] = f'{y_offset}, {50}'
 pg.display.set_caption(ORIG_CAPTION)
-pg.display.set_icon(pg.image.load(ICON_PATH))
+# pg.display.set_icon(pg.image.load(ICON_PATH))
 screen = pg.display.set_mode(SCREENSIZE)
 
 # loading screen while blank rendering

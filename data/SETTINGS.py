@@ -22,8 +22,9 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
 # font settings
-FONT_PATH = os.path.join("resources", "font")
-RENDER_FONT = pygame.font.Font(FONT_PATH, 50)
+FONT_PATH = os.path.join('resources', 'font')
+LOADING_FONT_PATH = os.path.join("resources", "font", 'ARCADECLASSIC.ttf')
+RENDER_FONT = pygame.font.Font(LOADING_FONT_PATH, 50)
 
 # music settings
 MUSIC_PATH = os.path.join('resources', 'snd')
@@ -36,6 +37,7 @@ ICON_PATH = os.path.join("resources", "img", "icon.png")
 
 # image settins
 IMG_PATH = os.path.join('resources', 'img')
+COLORKEY = (0, 0, 0)
 
 # timer settings
 FPS = 60
