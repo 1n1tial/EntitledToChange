@@ -1,5 +1,5 @@
 # class for managing the toggle between states ------------------------------------
-class StateManager():
+class StateManager(object):
     def __init__(self):
         self.over = False
         self.state_dict = {}
@@ -32,11 +32,11 @@ class StateManager():
         self.state.previous = previous
     
     def getEvent(self, event):
-        self.event.getEvent(event)
+        self.state.getEvent(event)
 
 
 # define state class -----------------
-class State():
+class State(object):
     def __init__(self):
         self.start_time = 0
         self.now = 0
@@ -57,5 +57,5 @@ class State():
         self.done = False
         return self.persist
 
-    def update(self):
+    def update(self, keys, now):
         pass

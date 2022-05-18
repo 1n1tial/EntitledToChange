@@ -1,8 +1,9 @@
-import os
+import os, sys
 import pygame as pg
 
-from .SETTINGS import *
-from . import controls
+sys.path.append(r"C:\Users\danyu\OneDrive - 서울과학고등학교\문서\서울과학고1학년\컴퓨터과학1\EntitledToChange")
+from data.SETTINGS import *
+from data import controls
 
 pg.init()
 
@@ -15,7 +16,7 @@ screen = pg.display.set_mode(SCREENSIZE)
 
 # loading screen while blank rendering
 screen.fill(BLACK)
-render_text = RENDER_FONT.render('Loading... please wait', 0, WHITE)
+render_text = RENDER_FONT.render('Loading', 0, WHITE)
 screen.blit(render_text, render_text.get_rect(center=SCREENRECT.center))
 pg.display.update()
 
@@ -23,4 +24,8 @@ pg.display.update()
 FONT_DICT = controls.load_font(FONT_PATH)
 MUSIC_DICT = controls.load_music(MUSIC_PATH)
 SFX_DICT = controls.load_sfx(SFX_PATH)
-IMG_DICT = controls.load_img(IMG_PATH)
+IMG_DICT = {}
+SUB_DIRECTORIES = ['splash']
+for dir in SUB_DIRECTORIES:
+    sub_dict = controls.load_img(os.path.join(IMG_PATH, dir))
+    IMG_DICT[dir] = sub_dict

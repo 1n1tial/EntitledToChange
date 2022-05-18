@@ -1,11 +1,12 @@
-import pygame, os
+import pygame, os, sys
 
+sys.path.append(r"C:\Users\danyu\OneDrive - 서울과학고등학교\문서\서울과학고1학년\컴퓨터과학1\EntitledToChange")
 from data import state_manager
 from data.SETTINGS import *
 
 
 # class for controlling the main flow of the game ----------
-class MainControl():
+class MainControl(object):
     def __init__(self, caption):
         self.screen = pygame.display.get_surface()
         self.caption = caption
@@ -15,11 +16,11 @@ class MainControl():
         self.fps_visible = True
         self.now = 0
         self.keys = pygame.key.get_pressed()
-        self.state_manager = state_manager.StateManager
+        self.state_manager = state_manager.StateManager()
 
     def update(self):
         self.now = pygame.time.get_ticks()
-        self.state_manager.update(self.keys, self.now)
+        self.state_manager.checkFlip(self.keys, self.now)
         
     def draw(self, interpolate):
         if not self.state_manager.state.done:
@@ -32,6 +33,10 @@ class MainControl():
             if event.type == pygame.QUIT:
                 self.over = True
             elif event.type == pygame.KEYDOWN:
+                for key in pygame.key.get_pressed():
+                    if key.type == pygame.K_ESCAPE:
+                        self.over = True
+            elif event.type == pygame.KEYDOWN:
                 self.keys = pygame.key.get_pressed()
                 self.toggleShowFps(event.key)
             elif event.type == pygame.KEYUP:
@@ -41,7 +46,7 @@ class MainControl():
     def toggleShowFps(self, key):
         if key == pygame.K_F5:
             self.fps_visible = not self.fps_visible
-            if not self.fps.visible:
+            if not self.fps_visible:
                 pygame.display.set_caption(self.caption)
     
     def show_fps(self):
@@ -61,7 +66,7 @@ class MainControl():
 
 
 # basic timer ------------ 
-class Timer():
+class Timer(object):
     def __init__(self, unit_ms, ticks=-1):
         self.unit_ms = unit_ms
         self.ticks = ticks
@@ -82,7 +87,7 @@ class Timer():
 
 
 # loading functions ------------------------------------------------------------
-def load_img(directory, set_colorkey=(COLORKEY), accept_ext=('.png', 'jpg')):
+def load_img(directory, set_colorkey=COLORKEY, accept_ext=('.png', '.jpg')):
     img_dict = {}
     for img in os.listdir(directory):
         name, ext = os.path.splitext(img)
