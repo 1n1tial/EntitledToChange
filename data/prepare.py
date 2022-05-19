@@ -16,8 +16,8 @@ screen = pg.display.set_mode(SCREENSIZE)
 
 # loading screen while blank rendering
 screen.fill(BLACK)
-render_text = RENDER_FONT.render('Loading', 0, WHITE)
-screen.blit(render_text, render_text.get_rect(center=SCREENRECT.center))
+render_title_text = RENDER_TITLE_FONT.render('Loading', 0, WHITE)
+screen.blit(render_title_text, render_title_text.get_rect(center=SCREENRECT.center))
 pg.display.update()
 
 # load fonts, music, sfx, img
@@ -29,3 +29,10 @@ SUB_DIRECTORIES = ['icon', 'splash', 'sprite']
 for dir in SUB_DIRECTORIES:
     sub_dict = controls.load_img(os.path.join(IMG_PATH, dir))
     IMG_DICT[dir] = sub_dict
+
+def render_font(font, text, size, color, center_pos, antialias=0):
+    font_to_render = pygame.font.Font(FONT_DICT[font], int(size))
+    rendered_font = font_to_render.render(text, antialias, color)
+    rendered_font_rect = rendered_font.get_rect(center=center_pos)
+    return rendered_font, rendered_font_rect
+    

@@ -32,7 +32,7 @@ BLACK = (0, 0, 0)
 # font settings
 FONT_PATH = os.path.join('resources', 'font')
 LOADING_FONT_PATH = os.path.join("resources", "font", 'ARCADECLASSIC.ttf')
-RENDER_FONT = pygame.font.Font(LOADING_FONT_PATH, 100)
+RENDER_TITLE_FONT = pygame.font.Font(LOADING_FONT_PATH, 100)
 
 # music settings
 MUSIC_PATH = os.path.join('resources', 'snd')

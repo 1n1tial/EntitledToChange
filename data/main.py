@@ -9,13 +9,15 @@ from data.state_manager import StateManager
 
 from data.states.splash import Splash
 from data.states.title_screen import TitleScreen
+from data.states.mode_selection import ModeSelection
 
 
 def mainLoop():
     game = controls.MainControl(ORIG_CAPTION)
     state_dict = {
             'SPLASH': Splash(),
-            'TITLE': TitleScreen()
+            'TITLE': TitleScreen(),
+            'MODE_SELECTION': ModeSelection()
     }
     game.state_manager = StateManager()
     game.state_manager.createStateDict(state_dict, 'SPLASH')
