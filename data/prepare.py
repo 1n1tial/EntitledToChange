@@ -11,7 +11,7 @@ pg.init()
 y_offset = (pg.display.Info().current_w - SCREENWIDTH)//2
 os.environ['SDL_VIDEO_WINDOW_POS'] = f'{y_offset}, {50}'
 pg.display.set_caption(ORIG_CAPTION)
-# pg.display.set_icon(pg.image.load(ICON_PATH))
+pg.display.set_icon(pg.image.load(ICON_PATH))
 screen = pg.display.set_mode(SCREENSIZE)
 
 # loading screen while blank rendering
@@ -25,7 +25,7 @@ FONT_DICT = controls.load_font(FONT_PATH)
 MUSIC_DICT = controls.load_music(MUSIC_PATH)
 SFX_DICT = controls.load_sfx(SFX_PATH)
 IMG_DICT = {}
-SUB_DIRECTORIES = ['splash']
+SUB_DIRECTORIES = ['icon', 'splash', 'sprite']
 for dir in SUB_DIRECTORIES:
     sub_dict = controls.load_img(os.path.join(IMG_PATH, dir))
     IMG_DICT[dir] = sub_dict

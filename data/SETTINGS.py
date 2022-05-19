@@ -7,8 +7,8 @@ sys.path.append('../data')
 pygame.init()
 
 # main game window settings -----------------------------------------------
-SCREENWIDTH = 1500
-SCREENHEIGHT = 800
+SCREENWIDTH = 700
+SCREENHEIGHT = 700
 SCREENSIZE = (SCREENWIDTH, SCREENHEIGHT)
 SCREENRECT = pygame.Rect(0, 0, SCREENWIDTH, SCREENHEIGHT)
 ORIG_CAPTION = "asteroids"
@@ -20,6 +20,10 @@ GAME_TITLE = 'Asteroids'
 
 # splash settings
 ALPHA_GRADIENT = 2
+
+# start settings
+SPACESHIP_VEL_X = 5
+SPACESHIP_VEL_Y = 4
 
 # color settings
 WHITE = (255, 255, 255)
@@ -37,7 +41,7 @@ MUSIC_PATH = os.path.join('resources', 'snd')
 SFX_PATH = os.path.join('resources', 'sfx')
 
 # icon settings
-ICON_PATH = os.path.join("resources", "img", "icon.png")
+ICON_PATH = os.path.join("resources", "img", "icon", "icon.png")
 
 # image settings
 IMG_PATH = os.path.join('resources', 'img')
@@ -49,3 +53,10 @@ STATE_UPDATE_TIME = 16
 
 # layer settings
 Layer_dict = {}
+
+# sprite settings ----------------------------
+# player settings ------------------------------
+FUEL_SIZE = 12
+FUEL_DIFF = 4
+FUEL_SIZE_DECREASE = 0.1
+PLAYER_WIDTH = 50

@@ -32,4 +32,6 @@ class Splash(State):
         surface.blit(self.image, self.rect)
 
     def getEvent(self, event):
-        self.done = event.type == pygame.KEYDOWN
+        if event.type == pygame.KEYDOWN:
+            if event.key != pygame.K_F5:
+                self.done = True

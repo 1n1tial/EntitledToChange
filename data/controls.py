@@ -1,8 +1,10 @@
-import pygame, os, sys
+import pygame, os, sys, random
+from pygame.constants import BLEND_RGB_ADD
 
 sys.path.append(r"C:\Users\danyu\OneDrive - 서울과학고등학교\문서\서울과학고1학년\컴퓨터과학1\EntitledToChange")
 from data import state_manager
 from data.SETTINGS import *
+from data.components.particles import circle_surf
 
 
 # class for controlling the main flow of the game ----------
@@ -33,10 +35,8 @@ class MainControl(object):
             if event.type == pygame.QUIT:
                 self.over = True
             elif event.type == pygame.KEYDOWN:
-                for key in pygame.key.get_pressed():
-                    if key.type == pygame.K_ESCAPE:
-                        self.over = True
-            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    self.over = True
                 self.keys = pygame.key.get_pressed()
                 self.toggleShowFps(event.key)
             elif event.type == pygame.KEYUP:
@@ -63,6 +63,26 @@ class MainControl(object):
                 self.update()
                 lag -= STATE_UPDATE_TIME
             self.draw(lag/STATE_UPDATE_TIME)
+
+
+# template class for all sprites -------------------------------------
+class BasicSprite(pygame.sprite.Sprite):
+    def __init__(self, pos, size, *groups):
+        pygame.sprite.Sprite.__init__(self, *groups)
+        self.rect = pygame.Rect(pos, size)
+        self.pos_basis = 'topleft'
+        self.new_pos = list(self.rect.topleft)
+        self.old_pos = self.new_pos[:]
+
+    def update_pos(self, value, basis='topleft'):
+        setattr(self.rect, basis, value)
+        self.new_pos = list(self.rect.topleft)
+        self.old_pos = self.new_pos[:]
+
+    def draw(self, surface):
+        surface.blit(self.image, self.rect)
+        pygame.draw.rect(surface, BLACK, self.rect)
+        
 
 
 # basic timer ------------ 
@@ -134,5 +154,36 @@ def load_font(directory, accept_ext=('.ttf')):
     return font_dict
 
 
+# define controls
+CONTROL1 = {
+    'UP': pygame.K_UP,
+    'DOWN': pygame.K_DOWN,
+    'RIGHT': pygame.K_RIGHT,
+    'LEFT': pygame.K_LEFT,
+    'SHOOT': pygame.K_SPACE
+}
+
+CONTROL2 = {
+    'UP': pygame.K_w,
+    'DOWN': pygame.K_s,
+    'RIGHT': pygame.K_d,
+    'LEFT': pygame.K_a,
+    'SHOOT': pygame.K_SPACE
+}
+
+
+# function for spawning particles
+def spawn_particles(obj, number, spread, v_y, surface):
+    for i in range(number):
+        obj.particles.append(list([*obj.rect.midbottom], [random.randint(0, spread*100)/100 - spread/2, v_y], random.randint(FUEL_SIZE-FUEL_DIFF, FUEL_SIZE-FUEL_DIFF)))
+
+    for particle in obj.particles:
+        particle[0][0] += particle[1][0]
+        particle[0][1] += particle[1][1]
+        particle[2] -= FUEL_SIZE_DECREASE
+        surface.blit(circle_surf(particle[2], (200, 0, 20)), (int(particle[0][0]-particle[2]), int(particle[0][1]-particle[2])), special_flags=BLEND_RGB_ADD)
+
+    if particle[2] <= 0 or obj.game.over:
+        obj.particles.remove(particle)
 
 
