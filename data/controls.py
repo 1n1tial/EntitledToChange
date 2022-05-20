@@ -81,7 +81,6 @@ class BasicSprite(pygame.sprite.Sprite):
 
     def draw(self, surface):
         surface.blit(self.image, self.rect)
-        pygame.draw.rect(surface, BLACK, self.rect)
         
 
 
@@ -175,7 +174,7 @@ CONTROL2 = {
 # function for spawning particles
 def spawn_particles(obj, number, spread, v_y, surface):
     for i in range(number):
-        obj.particles.append(list([*obj.rect.midbottom], [random.randint(0, spread*100)/100 - spread/2, v_y], random.randint(FUEL_SIZE-FUEL_DIFF, FUEL_SIZE-FUEL_DIFF)))
+        obj.particles.append([[*obj.rect.midbottom], [random.randint(0, spread*100)/100 - spread/2, v_y], random.randint(FUEL_SIZE-FUEL_DIFF, FUEL_SIZE-FUEL_DIFF)])
 
     for particle in obj.particles:
         particle[0][0] += particle[1][0]
@@ -183,7 +182,7 @@ def spawn_particles(obj, number, spread, v_y, surface):
         particle[2] -= FUEL_SIZE_DECREASE
         surface.blit(circle_surf(particle[2], (200, 0, 20)), (int(particle[0][0]-particle[2]), int(particle[0][1]-particle[2])), special_flags=BLEND_RGB_ADD)
 
-    if particle[2] <= 0 or obj.game.over:
+    if particle[2] <= 0:
         obj.particles.remove(particle)
 
 

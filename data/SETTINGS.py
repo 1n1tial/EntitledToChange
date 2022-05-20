@@ -13,6 +13,8 @@ SCREENSIZE = (SCREENWIDTH, SCREENHEIGHT)
 SCREENRECT = pygame.Rect(0, 0, SCREENWIDTH, SCREENHEIGHT)
 ORIG_CAPTION = "asteroids"
 
+COLOR_DICT = {}
+
 # main game settings ----------------------------------------------------
 GAME_TITLE = 'Asteroids'
 

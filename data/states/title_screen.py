@@ -1,5 +1,6 @@
 import pygame as pg
 import os, sys
+from math import sin, pi
 
 sys.path.append(r"C:\Users\danyu\OneDrive - 서울과학고등학교\문서\서울과학고1학년\컴퓨터과학1\EntitledToChange")
 
@@ -52,7 +53,7 @@ class TitleScreen(State):
             self.space_hold = True
         elif keystate[pg.K_SPACE] and self.space_hold:
             dt = now - self.hold_space_start
-            self.bg_color = 3*(255 - 255*dt//self.space_hold_time,)
+            self.bg_color = 3*(int(255 - (2-2**(1-dt/self.space_hold_time))*255),)
             if now - self.hold_space_start >= self.space_hold_time:
                 self.done = True
         elif not keystate[pg.K_SPACE] and self.space_hold:
@@ -80,6 +81,7 @@ class PressKeyText(pg.sprite.Sprite):
         
     def update(self, now, *args):
         self.size = 40 + abs(now % (2*self.decrease_time) - self.decrease_time)*self.decrease_rate
+        # self.size = 40 + int(sin(5*now/self.decrease_time)*self.decrease_diff)
         self.image, self.rect = render_font('ARCADECLASSIC', 'HOLD SPACE TO START', self.size, BLACK, (SCREENWIDTH//2, SCREENHEIGHT*7//10))
     
 

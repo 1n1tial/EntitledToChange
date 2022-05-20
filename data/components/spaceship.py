@@ -1,7 +1,7 @@
 import pygame, os, sys
 
 sys.path.append(r"C:\Users\danyu\OneDrive - 서울과학고등학교\문서\서울과학고1학년\컴퓨터과학1\EntitledToChange")
-from data.controls import CONTROL1, BasicSprite
+from data.controls import CONTROL1, BasicSprite, spawn_particles
 from data.SETTINGS import *
 from data.prepare import *
 
