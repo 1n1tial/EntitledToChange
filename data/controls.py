@@ -1,5 +1,5 @@
 import pygame, os, sys, random
-from pygame.constants import BLEND_RGB_ADD
+from pygame.constants import *
 
 sys.path.append(r"C:\Users\danyu\OneDrive - 서울과학고등학교\문서\서울과학고1학년\컴퓨터과학1\EntitledToChange")
 from data import state_manager
@@ -52,7 +52,13 @@ class MainControl(object):
     def show_fps(self):
         if self.fps_visible:
             current_fps = self.clock.get_fps()
-            pygame.display.set_caption('{} - {:.2f} frames per second'.format(self.caption, current_fps))
+            # pygame.display.set_caption('{} - {:.2f} frames per second'.format(self.caption, current_fps))
+            pygame.display.set_caption('{} - {}'.format(self.caption, self.state_manager.state_name))
+            # try:
+            #     pygame.display.set_caption(f'{self.state_manager.state.current_text}')
+            # except:
+            #     pass
+
 
     def main(self):
         lag = 0
@@ -65,23 +71,7 @@ class MainControl(object):
             self.draw(lag/STATE_UPDATE_TIME)
 
 
-# template class for all sprites -------------------------------------
-class BasicSprite(pygame.sprite.Sprite):
-    def __init__(self, pos, size, *groups):
-        pygame.sprite.Sprite.__init__(self, *groups)
-        self.rect = pygame.Rect(pos, size)
-        self.pos_basis = 'topleft'
-        self.new_pos = list(self.rect.topleft)
-        self.old_pos = self.new_pos[:]
 
-    def update_pos(self, value, basis='topleft'):
-        setattr(self.rect, basis, value)
-        self.new_pos = list(self.rect.topleft)
-        self.old_pos = self.new_pos[:]
-
-    def draw(self, surface):
-        surface.blit(self.image, self.rect)
-        
 
 
 # basic timer ------------ 
@@ -172,18 +162,22 @@ CONTROL2 = {
 
 
 # function for spawning particles
-def spawn_particles(obj, number, spread, v_y, surface):
+def spawn_particles(obj, number, spread, v_y, surface, color):
     for i in range(number):
-        obj.particles.append([[*obj.rect.midbottom], [random.randint(0, spread*100)/100 - spread/2, v_y], random.randint(FUEL_SIZE-FUEL_DIFF, FUEL_SIZE-FUEL_DIFF)])
+        player_particles.append([[obj.rect.centerx, obj.rect.bottom], [random.randint(0, spread*100) / 100 - spread/2, v_y], random.randint(FUEL_SIZE-FUEL_DIFF, FUEL_SIZE+FUEL_DIFF)])
 
-    for particle in obj.particles:
+    for particle in player_particles:
         particle[0][0] += particle[1][0]
         particle[0][1] += particle[1][1]
-        particle[2] -= FUEL_SIZE_DECREASE
-        surface.blit(circle_surf(particle[2], (200, 0, 20)), (int(particle[0][0]-particle[2]), int(particle[0][1]-particle[2])), special_flags=BLEND_RGB_ADD)
+        particle[2] -= 0.12
+        particle[1][1] -= 0.1
+        # pygame.draw.circle(screen, (0, 0, 0), [int(particle[0][0]), int(particle[0][1])], int(particle[2] * 2))
 
-    if particle[2] <= 0:
-        obj.particles.remove(particle)
+        radius = particle[2] * 3
+        surface.blit(circle_surf(radius, color), (int(particle[0][0] - radius), int(particle[0][1] - radius)), special_flags=BLEND_RGBA_ADD)
+
+        if particle[2] <= 0:
+            player_particles.remove(particle)
 
 
 

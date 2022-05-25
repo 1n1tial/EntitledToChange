@@ -19,9 +19,9 @@ class TitleScreen(State):
 
         self.title_text = GAME_TITLE
 
-        self.spaceship = TitleSpaceship()
         self.elements = pg.sprite.LayeredUpdates()
-        self.elements.add(self.spaceship, PressKeyText(), layer=1)
+        self.spaceship = TitleSpaceship(self, (self.elements,))
+        self.presskeytext = PressKeyText(self, (self.elements,))
 
         self.space_hold_time = 2000
         self.space_hold = False
@@ -63,22 +63,21 @@ class TitleScreen(State):
     def getEvent(self, event):
         self.checkSpaceHold(self.now, event)
 
+
 class TitleSpaceship(Spaceship):
-    def __init__(self, *groups):
-        Spaceship.__init__(self, *groups)
+    def __init__(self, state, *groups):
+        Spaceship.__init__(self, state, *groups)
         
     def update(self, now, *args):
         pass
 
 
-class PressKeyText(pg.sprite.Sprite):
-    def __init__(self, *groups):
-        pg.sprite.Sprite.__init__(self, *groups)
-        self.rendered_font, self.rect = render_font('ARCADECLASSIC', 'HOLD SPACE TO START', 30, BLACK, (SCREENWIDTH//2, SCREENHEIGHT*7//10))
-        self.size = 30
+class PressKeyText(BasicText):
+    def __init__(self, state, *groups):
+        BasicText.__init__(self, state, 'ARCADECLASSIC', 'HOLD SPACE TO START', 30, BLACK, (SCREENWIDTH//2, SCREENHEIGHT*7//10), *groups)
         self.decrease_time = 1000
         self.decrease_rate = 0.03
-        
+    
     def update(self, now, *args):
         self.size = 40 + abs(now % (2*self.decrease_time) - self.decrease_time)*self.decrease_rate
         # self.size = 40 + int(sin(5*now/self.decrease_time)*self.decrease_diff)

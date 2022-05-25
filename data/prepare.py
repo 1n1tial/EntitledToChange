@@ -36,3 +36,40 @@ def render_font(font, text, size, color, center_pos, antialias=0):
     rendered_font_rect = rendered_font.get_rect(center=center_pos)
     return rendered_font, rendered_font_rect
     
+
+
+# template class for all sprites -------------------------------------
+class BasicSprite(pygame.sprite.Sprite):
+    def __init__(self, pos, size, *groups):
+        pygame.sprite.Sprite.__init__(self, *groups)
+        self.rect = pygame.Rect(pos, size)
+        self.pos_basis = 'topleft'
+        self.new_pos = list(self.rect.topleft)
+        self.old_pos = self.new_pos[:]
+
+    def update_pos(self, value, basis='topleft'):
+        setattr(self.rect, basis, value)
+        self.new_pos = list(self.rect.topleft)
+        self.old_pos = self.new_pos[:]
+
+    def draw(self, surface):
+        surface.blit(self.image, self.rect)
+
+
+class BasicText(pygame.sprite.Sprite):
+    def __init__(self, state, font, text, size, color, pos, *groups):
+        self._layer = Layer_dict['Text']
+        self.groups = (state.elements,)
+        pygame.sprite.Sprite.__init__(self, *groups)
+        self.state = state
+        self.rendered_font, self.rect = render_font(font, text, size, color, pos)
+        self.font = font
+        self.size = size
+        self.text = text
+        self.color = color
+        self.pos = pos
+        
+    def update(self, now, *args):
+        self.image, self.rect = render_font(self.font, self.text, self.size, self.color, self.pos)
+    
+        
