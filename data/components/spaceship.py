@@ -5,6 +5,7 @@ sys.path.append(r"C:\Users\danyu\OneDrive - 서울과학고등학교\문서\서�
 from data.controls import CONTROL1
 from data.SETTINGS import *
 from data.prepare import *
+from data.components.bullet import Bullet
 
 class Spaceship(BasicSprite):
     def __init__(self, state, *groups):
@@ -14,6 +15,8 @@ class Spaceship(BasicSprite):
         self.state = state
         self.controls = CONTROL1
         self.image = pygame.transform.scale(IMG_DICT['sprite']['spaceship'], (PLAYER_WIDTH, PLAYER_WIDTH))
+
+        self.last_shot = -10000
 
     def move(self):
         self.vel_x = 0
@@ -40,3 +43,9 @@ class Spaceship(BasicSprite):
         self.move()
         self.rect.topleft = self.new_pos
         self.checkCollision()
+        self.now = now
+
+    def shoot(self):
+        if self.now - self.last_shot >= SHOOT_COOLDOWN:
+            Bullet(self.state, BULLET_VEL, self.groups)
+            self.last_shot = self.now

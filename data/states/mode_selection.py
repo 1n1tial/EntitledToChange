@@ -42,20 +42,21 @@ class ModeSelection(State):
        
     def update(self, keys, now):
         self.now = now
-        if now - self.last_switch >= SWITCH_COOLTIME:
-            self.last_switch = now
-            self.switchText(keys)
+        self.switchText(keys)
         self.current_text = self.text_list[0]
         self.elements.update(now)
-        self.changeColor(now)
+        # self.changeColor(now)
+        self.next = self.current_text
 
     def switchText(self, keys):
-        if keys[pygame.K_UP]:
-            current_text = self.text_list.pop(0)
-            self.text_list.append(current_text)
-        elif keys[pygame.K_DOWN]:
-            current_text = self.text_list.pop(3)
-            self.text_list.insert(0, current_text)
+        if self.now - self.last_switch >= SWITCH_COOLTIME:
+            self.last_switch = self.now
+            if keys[pygame.K_UP]:
+                current_text = self.text_list.pop(0)
+                self.text_list.append(current_text)
+            elif keys[pygame.K_DOWN]:
+                current_text = self.text_list.pop(3)
+                self.text_list.insert(0, current_text)
 
 
     def changeColor(self, now):
@@ -72,7 +73,7 @@ class ModeSelection(State):
 
     def getEvent(self, event):
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_KP_ENTER:
+            if event.key == pygame.K_RETURN:
                 self.next = self.current_text
                 self.done = True
 
@@ -104,32 +105,32 @@ class ModeText(BasicText):
         if self.hold == 'TOP' and self.text == self.state.current_text:
             if self.old_idx == 3:
                 self.hold = 'BOTTOM'
+                self.pos[1] = SCREENHEIGHT + 20
             else:
-                self.vel += 3
+                self.vel += 2
                 if self.pos[1] >= SCREENHEIGHT//2:
                     self.hold = 'MID'
         if self.hold == 'MID' and self.text == self.state.current_text:
             self.vel = 0
-            self.pos[1] = SCREENHEIGHT//2
+            #self.pos[1] = SCREENHEIGHT//2
         if self.hold == 'MID' and self.text != self.state.text_list:
             if target_idx%4 == (current_idx + 1)%4:
-                self.vel += 3
+                self.vel += 2
                 if self.pos[1] >= SCREENHEIGHT + 20:
                     self.vel = 0
-                    self.pos[1] = SCREENHEIGHT + 20
                     self.hold = 'BOTTOM'
             elif target_idx%4 == (current_idx - 1)%4:
-                self.vel -= 3
+                self.vel -= 2
                 if self.pos[1] <= -20:
                     self.vel = 0
-                    self.pos[1] = -20
                     self.hold = 'TOP'
         if self.hold == 'BOTTOM' and self.text == self.state.current_text:
             if self.old_idx == 1:
                 self.hold = 'TOP'
+                self.pos[1] = -20
             else:
-                self.vel -= 3
-                if self.pos[1] <= SCREENHEIGHT//2:
+                self.vel -= 2
+                if self.pos[1] <= SCREENHEIGHT//2 + 30:
                     self.hold = 'MID'
         self.old_idx = current_idx
         self.pos[1] += self.vel

@@ -33,7 +33,7 @@ ONE_COLOR_TIME = 2000
 CHANGE_TIME = 500
 LOOP_TIME = 2*(ONE_COLOR_TIME + CHANGE_TIME)
 MAX_COLOR = 100
-SWITCH_COOLTIME = 200
+SWITCH_COOLTIME = 400
 SHOOT_COOLDOWN = 200
 
 # color settings
@@ -66,7 +66,8 @@ STATE_UPDATE_TIME = 16
 # layer settings
 Layer_dict = {
     'Spaceship': 1,
-    'Text': 2}
+    'Bullet': 2,
+    'Text': 3}
 
 # sprite settings ----------------------------
 # player settings ------------------------------
@@ -76,3 +77,8 @@ FUEL_SIZE_DECREASE = 0.12
 PLAYER_WIDTH = 50
 FUEL_ACCELERATION = 0.1
 player_particles = []
+
+# bullet settings
+BULLET_WIDTH = 30
+BULLET_HEIGHT = 70
+BULLET_VEL = 4

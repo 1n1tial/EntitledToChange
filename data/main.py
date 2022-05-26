@@ -10,7 +10,10 @@ from data.state_manager import StateManager
 from data.states.splash import Splash
 from data.states.title_screen import TitleScreen
 from data.states.mode_selection import ModeSelection
-# from data.states.multiplayer import Multiplayer
+# from data.states.multiplayer import MultiPlayer
+from data.states.endless import Endless
+from data.states.speedrun import Speedrun
+# from data.states.singleplayer import SinglePlayer
 
 
 def mainLoop():
@@ -19,7 +22,10 @@ def mainLoop():
             'SPLASH': Splash(),
             'TITLE': TitleScreen(),
             'MODE_SELECTION': ModeSelection(),
-            # 'MULTIPLAYER': Multiplayer()
+            # 'MULTIPLAYER': MultiPlayer(),
+            'SPEEDRUN': Speedrun(),
+            'ENDLESS': Endless(),
+            # 'SINGLEPLAYER': SinglePlayer()
     }
     game.state_manager = StateManager()
     game.state_manager.createStateDict(state_dict, 'SPLASH')

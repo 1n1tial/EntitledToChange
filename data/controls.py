@@ -55,7 +55,7 @@ class MainControl(object):
             # pygame.display.set_caption('{} - {:.2f} frames per second'.format(self.caption, current_fps))
             pygame.display.set_caption('{} - {}'.format(self.caption, self.state_manager.state_name))
             # try:
-            #     pygame.display.set_caption(f'{self.state_manager.state.current_text}')
+            #     pygame.display.set_caption(f'{(self.state_manager.state.now - self.state_manager.state.last_switch)%100}')
             # except:
             #     pass
 
