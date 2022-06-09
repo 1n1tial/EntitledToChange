@@ -34,12 +34,15 @@ CHANGE_TIME = 500
 LOOP_TIME = 2*(ONE_COLOR_TIME + CHANGE_TIME)
 MAX_COLOR = 100
 SWITCH_COOLTIME = 400
-SHOOT_COOLDOWN = 200
 
 # color settings
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 BLUE = (0, 0, 255)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+YELLOW = (255, 255, 0)
+
 
 # font settings
 FONT_PATH = os.path.join('resources', 'font')
@@ -67,7 +70,8 @@ STATE_UPDATE_TIME = 16
 Layer_dict = {
     'Spaceship': 1,
     'Bullet': 2,
-    'Text': 3}
+    'Text': 3,
+    'Asteroid': 1}
 
 # sprite settings ----------------------------
 # player settings ------------------------------
@@ -76,9 +80,19 @@ FUEL_DIFF = 1
 FUEL_SIZE_DECREASE = 0.12
 PLAYER_WIDTH = 50
 FUEL_ACCELERATION = 0.1
-player_particles = []
+PARTICLES = {
+    'player': [],
+    'bullet': []
+}
+SHOOT_COOLDOWN = 400
+
 
 # bullet settings
-BULLET_WIDTH = 30
-BULLET_HEIGHT = 70
-BULLET_VEL = 4
+BULLET_WIDTH = 10
+BULLET_HEIGHT = 50
+BULLET_VEL = 10
+BULLET_LIGHTING_RADIUS = 2
+
+# asteroidd settings
+ASTEROID_WIDTH = 50
+ASTEROID_HEIGHT = 50

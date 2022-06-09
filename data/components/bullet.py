@@ -9,8 +9,8 @@ from data.prepare import *
 class Bullet(BasicSprite):
     def __init__(self, state, vel, *groups):
         self._layer = Layer_dict['Bullet']
-        self.groups = (state.elements,)
-        BasicSprite.__init__(self, [state.spaceship.rect.midtop[0]-BULLET_WIDTH//2, state.spaceship.rect.midtop[1]-BULLET_HEIGHT//2], [], *groups)
+        self.groups = (state.elements, state.bullets)
+        BasicSprite.__init__(self, [state.spaceship.rect.midtop[0]-BULLET_WIDTH//2, state.spaceship.rect.midtop[1]-BULLET_HEIGHT//2], [BULLET_WIDTH, BULLET_HEIGHT], *groups)
         self.state = state
         self.image = pygame.transform.scale(IMG_DICT['sprite']['bullet'], (BULLET_WIDTH, BULLET_HEIGHT))
 

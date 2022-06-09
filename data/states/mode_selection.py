@@ -36,7 +36,8 @@ class ModeSelection(State):
 
     def draw(self, surface, interpolate):
         surface.fill(self.bg_color)
-        spawn_particles(self.spaceship, 3, 3, 3, surface, (200, 0, 20))
+        spawn_particles(self.spaceship, 5, 3, 3, surface, (10, 10, 10))
+        spawn_particles(self.spaceship, 3, 3, 3, surface, (20, 0, 200))
         self.elements.draw(surface)
         # pygame.draw.rect(surface, (0, 0, 0), self.spaceship.rect, 2)
        
@@ -55,7 +56,7 @@ class ModeSelection(State):
                 current_text = self.text_list.pop(0)
                 self.text_list.append(current_text)
             elif keys[pygame.K_DOWN]:
-                current_text = self.text_list.pop(3)
+                current_text = self.text_list.pop(len(self.text_list)-1)
                 self.text_list.insert(0, current_text)
 
 
@@ -82,14 +83,14 @@ class ModeSelection(State):
 class ModeSelectionSpaceship(Spaceship):
     def __init__(self, state, *groups):
         Spaceship.__init__(self, state, *groups)
-        self.particles = []
+        
 
     def update(self, now, *args):
-        super().update(now, *args)
-
-    def shoot(self):
-        if self.now - self.last_shot >= SHOOT_COOLDOWN:
-            pass
+        self.now = now
+        self.old_pos = self.new_pos[:]
+        self.move()
+        self.rect.topleft = self.new_pos
+        self.checkCollision()
         
     
 class ModeText(BasicText):
@@ -103,7 +104,7 @@ class ModeText(BasicText):
         current_idx = self.state.text_list.index(self.text)
         target_idx = self.state.text_list.index(self.state.current_text)
         if self.hold == 'TOP' and self.text == self.state.current_text:
-            if self.old_idx == 3:
+            if self.old_idx == len(self.state.text_list)-1:
                 self.hold = 'BOTTOM'
                 self.pos[1] = SCREENHEIGHT + 20
             else:
@@ -114,12 +115,12 @@ class ModeText(BasicText):
             self.vel = 0
             #self.pos[1] = SCREENHEIGHT//2
         if self.hold == 'MID' and self.text != self.state.text_list:
-            if target_idx%4 == (current_idx + 1)%4:
+            if target_idx%len(self.state.text_list) == (current_idx + 1)%len(self.state.text_list):
                 self.vel += 2
                 if self.pos[1] >= SCREENHEIGHT + 20:
                     self.vel = 0
                     self.hold = 'BOTTOM'
-            elif target_idx%4 == (current_idx - 1)%4:
+            elif target_idx%len(self.state.text_list) == (current_idx - 1)%len(self.state.text_list):
                 self.vel -= 2
                 if self.pos[1] <= -20:
                     self.vel = 0

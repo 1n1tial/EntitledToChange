@@ -17,6 +17,12 @@ class Spaceship(BasicSprite):
         self.image = pygame.transform.scale(IMG_DICT['sprite']['spaceship'], (PLAYER_WIDTH, PLAYER_WIDTH))
 
         self.last_shot = -10000
+        self.particles = []
+
+        self.health = 100
+        self.max_health = 100
+
+        self.is_alive = True
 
     def move(self):
         self.vel_x = 0
@@ -39,13 +45,16 @@ class Spaceship(BasicSprite):
             self.new_pos[0] = 0
 
     def update(self, now, *args):
+        self.now = now
         self.old_pos = self.new_pos[:]
         self.move()
+        self.shoot()
         self.rect.topleft = self.new_pos
         self.checkCollision()
-        self.now = now
 
     def shoot(self):
-        if self.now - self.last_shot >= SHOOT_COOLDOWN:
-            Bullet(self.state, BULLET_VEL, self.groups)
-            self.last_shot = self.now
+        keystate = pygame.key.get_pressed()
+        if keystate[self.controls['SHOOT']]:
+            if self.now - self.last_shot >= SHOOT_COOLDOWN:
+                Bullet(self.state, BULLET_VEL, (self.state.elements, self.state.bullets))
+                self.last_shot = self.now

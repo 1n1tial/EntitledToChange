@@ -53,11 +53,11 @@ class MainControl(object):
         if self.fps_visible:
             current_fps = self.clock.get_fps()
             # pygame.display.set_caption('{} - {:.2f} frames per second'.format(self.caption, current_fps))
-            pygame.display.set_caption('{} - {}'.format(self.caption, self.state_manager.state_name))
-            # try:
-            #     pygame.display.set_caption(f'{(self.state_manager.state.now - self.state_manager.state.last_switch)%100}')
-            # except:
-            #     pass
+            # pygame.display.set_caption('{} - {}'.format(self.caption, self.state_manager.state_name))
+            try:
+                pygame.display.set_caption(f'{self.state_manager.state.text_state}')
+            except:
+                pass
 
 
     def main(self):
@@ -163,10 +163,11 @@ CONTROL2 = {
 
 # function for spawning particles
 def spawn_particles(obj, number, spread, v_y, surface, color):
+    particles = obj.particles
     for i in range(number):
-        player_particles.append([[obj.rect.centerx, obj.rect.bottom], [random.randint(0, spread*100) / 100 - spread/2, v_y], random.randint(FUEL_SIZE-FUEL_DIFF, FUEL_SIZE+FUEL_DIFF)])
+        particles.append([[obj.rect.centerx, obj.rect.bottom], [random.randint(0, spread*100) / 100 - spread/2, v_y], random.randint(FUEL_SIZE-FUEL_DIFF, FUEL_SIZE+FUEL_DIFF)])
 
-    for particle in player_particles:
+    for particle in particles:
         particle[0][0] += particle[1][0]
         particle[0][1] += particle[1][1]
         particle[2] -= 0.12
@@ -177,7 +178,7 @@ def spawn_particles(obj, number, spread, v_y, surface, color):
         surface.blit(circle_surf(radius, color), (int(particle[0][0] - radius), int(particle[0][1] - radius)), special_flags=BLEND_RGBA_ADD)
 
         if particle[2] <= 0:
-            player_particles.remove(particle)
+            particles.remove(particle)
 
 
 
