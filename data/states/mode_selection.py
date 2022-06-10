@@ -75,7 +75,15 @@ class ModeSelection(State):
     def getEvent(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RETURN:
-                self.next = self.current_text
+                if self.current_text == 'MULTIPLAYER':
+                    self.next = 'MULTIPLAYER'
+                elif self.current_text == 'SPEEDRUN':
+                    self.next = 'SPEEDRUN'
+                elif self.current_text == 'ENDLESS':
+                    self.next = 'ENDLESS'
+                elif self.current_text == 'SINGLEPLAYER':
+                    self.next = 'firststage'
+                
                 self.done = True
 
 

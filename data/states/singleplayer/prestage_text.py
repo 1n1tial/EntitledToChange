@@ -1,4 +1,3 @@
-from typing import Type
 import pygame
 import os, sys, random
 
@@ -72,9 +71,6 @@ class PreStageText(State):
         self.elements.update(now)
 
 
-
-        
-    
     def getEvent(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:

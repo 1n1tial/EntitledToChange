@@ -59,10 +59,10 @@ class BasicSprite(pygame.sprite.Sprite):
 class BasicText(pygame.sprite.Sprite):
     def __init__(self, state, font, text, size, color, pos, *groups):
         self._layer = Layer_dict['Text']
-        self.groups = (state.elements,)
-        pygame.sprite.Sprite.__init__(self, *groups)
+        self.groups = groups
+        pygame.sprite.Sprite.__init__(self, self.groups)
         self.state = state
-        self.rendered_font, self.rect = render_font(font, text, size, color, pos)
+        self.image, self.rect = render_font(font, text, size, color, pos)
         self.font = font
         self.size = size
         self.text = text

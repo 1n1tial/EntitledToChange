@@ -13,6 +13,7 @@ class Asteroid(BasicSprite):
         BasicSprite.__init__(self, (randint(20, SCREENWIDTH-20), 20 ), (ASTEROID_WIDTH, ASTEROID_HEIGHT), *groups)
         self.state = state
         self.image = pygame.transform.scale(IMG_DICT['sprite']['asteroid'], (ASTEROID_WIDTH, ASTEROID_HEIGHT))
+        self.particles = []
 
     def move(self):
         self.new_pos[1] += 9

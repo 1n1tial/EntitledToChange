@@ -16,6 +16,8 @@ from data.states.mode_selection import ModeSelection
 from data.states.endless import Endless
 from data.states.speedrun import Speedrun
 from data.states.stage_selection import StageSelection
+from data.states.singleplayer.first_stage import FirstStage
+from data.states.singleplayer.first_stage_main import FirstStageMain
 from data.states.singleplayer.fire1 import Fire1
 from data.states.singleplayer.fire1_main import Fire1Main
 from data.states.singleplayer.elec1 import Elec1
@@ -30,7 +32,9 @@ def mainLoop():
             # 'MULTIPLAYER': MultiPlayer(),
             'SPEEDRUN': Speedrun(),
             'ENDLESS': Endless(),
-            'SINGLEPLAYER': StageSelection(),
+            'stageselection': StageSelection(),
+            'firststage': FirstStage(),
+            'firststagemain': FirstStageMain(),
             'fire1': Fire1(),
             'fire1main': Fire1Main(),
             'elec1': Elec1()

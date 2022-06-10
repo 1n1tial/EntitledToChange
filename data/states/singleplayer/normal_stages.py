@@ -18,6 +18,22 @@ class Stage(State):
         State.__init__(self)
         self.next = None
 
+        self.state = 'running' 
+        # text printing related-------------
+        self.text_list_array = [['asdf', 'asdfasdf', 'asdfasdfasdf'], ['asdf', 'asdf', 'asdf']]
+        self.current_text_list_idx = 0
+        self.text_list = self.text_list_array[self.current_text_list_idx]
+        self.text_interval = 50
+        self.box_reveal_time = 500
+        self.text_state = 'printing'
+        self.text_num = 0
+        self.text_counter = 0
+        self.text_ch_num = 0
+        
+        self.max_box_width = 500
+        self.box_height = 100
+        self.print_texts = pygame.sprite.Group()
+
         self.elements = pygame.sprite.LayeredUpdates()
         self.bullets = pygame.sprite.Group()
         self.asteroids = pygame.sprite.Group()
@@ -40,13 +56,53 @@ class Stage(State):
             for i in range(10):
                 screen.blit(circle_surf(BULLET_LIGHTING_RADIUS*i, (20, 20, 20)), (bullet.rect.centerx - BULLET_LIGHTING_RADIUS*i, bullet.rect.y), special_flags=BLEND_RGBA_ADD)
         draw_health_bar(surface, 30, 30, 20, 400, self.spaceship)
+        if self.state == 'texting':
+            pygame.draw.rect(surface, WHITE, pygame.Rect(SCREENWIDTH//2 - self.box_width//2, SCREENHEIGHT*4//5 - self.box_height//2, self.box_width, self.box_height))
+            self.print_texts.draw(surface)
         self.elements.draw(surface)
        
     def update(self, keys, now):
-        self.now = now
-        self.spawnAsteroid()
-        self.checkCollision()
-        self.elements.update(now)
+        if now - self.start_time == 0 or 9900 <= now - self.start_time <= 10000:
+            self.state = 'texting'
+            self.text_start_time = now
+        if self.state == 'running':
+            self.now = now
+            self.spawnAsteroid()
+            self.checkCollision()
+            self.elements.update(now)
+        elif self.state == 'texting':
+            self.now = now
+            self.update_text_box(now)
+            
+            try:
+                self.current_text = self.text_list[self.text_num]
+                
+                if self.text_state == 'printing':
+                    if now - self.text_counter >= self.text_interval and self.text_ch_num <= len(self.current_text):
+                        self.text_counter = now
+                        self.text_ch_num += 1
+                        self.print_texts.empty()
+                        BasicText(self, 'ARCADECLASSIC', self.current_text[0:self.text_ch_num+1], 20, BLACK, [SCREENWIDTH//2, SCREENHEIGHT*4//5], (self.print_texts,))
+                    if self.text_ch_num >= len(self.current_text):
+                        self.text_state = 'done'
+                if self.text_state == 'done':
+                    self.print_texts.empty()
+                    BasicText(self, 'ARCADECLASSIC', self.current_text, 20, BLACK, [SCREENWIDTH//2, SCREENHEIGHT*4//5], (self.print_texts,))
+            
+            except IndexError:
+                self.state = 'running'
+                self.print_texts.empty()
+                try:
+                    self.current_text_list_idx += 1
+                    self.text_list = self.text_list_array[self.current_text_list_idx]
+                except IndexError:
+                    pass
+                self.text_ch_num = 0
+                self.text_num = 0
+
+            self.print_texts.update(now)
+
+
 
     def spawnAsteroid(self):
         if self.now - self.last_spawn >= random.randint(1500, 3000):
@@ -66,6 +122,23 @@ class Stage(State):
     def getEvent(self, event):
         if not self.spaceship.is_alive:
             self.done = True
+        if self.state == 'texting':
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    if self.text_state == 'printing':
+                        self.text_state = 'done'
+                    elif self.text_state == 'done':
+                        self.text_num += 1
+                        self.text_state = 'printing'
+                        self.text_counter = 0
+                        self.text_ch_num = 0
+
+    def update_text_box(self, now):
+        dt = now - self.text_start_time
+        if dt <= self.box_reveal_time:
+            self.box_width = self.max_box_width*dt/self.box_reveal_time
+        else:
+            self.box_width = self.max_box_width
 
 
 class StageSpaceship(Spaceship):
@@ -79,6 +152,8 @@ class StageText(BasicText):
         
     def update(self, now, *args):
         super().update(now, *args)
+
+
 
     
         
