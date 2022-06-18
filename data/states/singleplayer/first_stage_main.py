@@ -35,3 +35,5 @@ class FirstStageMain(Stage):
         if now - self.start_time == 0 or 3000 <= now - self.start_time <= 3100 or 10000 <= now - self.start_time <= 10100 or 18000 <= now - self.start_time <= 18100 or 35000 <= now - self.start_time <= 35100:
             self.state = 'texting'
             self.text_start_time = now
+
+

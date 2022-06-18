@@ -23,6 +23,7 @@ from data.states.singleplayer.first_stage_after import FirstStageAfter
 from data.states.singleplayer.fire1 import Fire1
 from data.states.singleplayer.fire1_main import Fire1Main
 from data.states.singleplayer.elec1 import Elec1
+from data.states.singleplayer.elec1_main import Elec1Main
 from data.states.singleplayer.gravity1 import Gravity1Main
 
 
@@ -35,7 +36,7 @@ def mainLoop():
             # 'MULTIPLAYER': MultiPlayer(),
             'SPEEDRUN': Speedrun(),
             # 'ENDLESS': Endless(),
-            'ENDLESS': Gravity1Main(),
+            'ENDLESS': Elec1Main(),
             'stageselection': StageSelection(),
             'firststage': FirstStage(),
             'firststagemain': FirstStageMain(),
@@ -43,6 +44,7 @@ def mainLoop():
             'fire1': Fire1(),
             'fire1main': Fire1Main(),
             'elec1': Elec1(),
+            'elec1main': Elec1Main(),
             'gravity1main': Gravity1Main()
     }
     game.state_manager = StateManager()

@@ -36,6 +36,12 @@ class Spaceship(BasicSprite):
 
         self.new_pos[0] += self.vel_x
 
+    def damage(self, dmg):
+        if self.health > dmg:
+                self.health -= dmg
+        else:
+            self.is_alive = False
+
     def checkCollision(self):
         if self.rect.right > SCREENWIDTH:
             self.rect.right = SCREENWIDTH

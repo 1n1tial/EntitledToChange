@@ -115,10 +115,7 @@ class Stage(State):
     def checkCollision(self):
         hits = pygame.sprite.spritecollide(self.spaceship, self.asteroids, True, pygame.sprite.collide_circle)
         for hit in hits:
-            if self.spaceship.health > 10:
-                self.spaceship.health -= 10
-            else:
-                self.spaceship.is_alive = False
+            self.spaceship.damage(10)
 
         hits = pygame.sprite.groupcollide(self.asteroids, self.bullets, True, True)
     
