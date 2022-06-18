@@ -11,6 +11,8 @@ pygame.init()
 SCREENWIDTH = 700
 SCREENHEIGHT = 700
 SCREENSIZE = (SCREENWIDTH, SCREENHEIGHT)
+TILESIZE = 50
+TILEWIDTH = SCREENWIDTH // TILESIZE
 SCREENRECT = pygame.Rect(0, 0, SCREENWIDTH, SCREENHEIGHT)
 ORIG_CAPTION = "asteroids"
 
@@ -34,6 +36,11 @@ CHANGE_TIME = 500
 LOOP_TIME = 2*(ONE_COLOR_TIME + CHANGE_TIME)
 MAX_COLOR = 100
 SWITCH_COOLTIME = 400
+
+# gravity stage settings
+GRAVITY = 0.25
+SPACESHIP_ACC_Y = 0.6
+RESISTANCE = -0.12
 
 # color settings
 WHITE = (255, 255, 255)
@@ -74,16 +81,12 @@ Layer_dict = {
     'Asteroid': 1}
 
 # sprite settings ----------------------------
-# player settings ------------------------------
+# spaceship settings ------------------------------
 FUEL_SIZE = 4
 FUEL_DIFF = 1
 FUEL_SIZE_DECREASE = 0.12
-PLAYER_WIDTH = 50
+PLAYER_WIDTH = 30
 FUEL_ACCELERATION = 0.1
-PARTICLES = {
-    'player': [],
-    'bullet': []
-}
 SHOOT_COOLDOWN = 400
 
 
@@ -93,6 +96,6 @@ BULLET_HEIGHT = 50
 BULLET_VEL = 10
 BULLET_LIGHTING_RADIUS = 2
 
-# asteroidd settings
+# asteroid settings
 ASTEROID_WIDTH = 50
 ASTEROID_HEIGHT = 50

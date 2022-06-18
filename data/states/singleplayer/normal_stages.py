@@ -20,8 +20,8 @@ class Stage(State):
 
         self.state = 'running' 
         # text printing related-------------
-        self.text_list_array = [['asdf', 'asdfasdf', 'asdfasdfasdf'], ['asdf', 'asdf', 'asdf']]
         self.current_text_list_idx = 0
+        self.text_list_array = [['asdf'], ['asdf']]
         self.text_list = self.text_list_array[self.current_text_list_idx]
         self.text_interval = 50
         self.box_reveal_time = 500
@@ -61,10 +61,13 @@ class Stage(State):
             self.print_texts.draw(surface)
         self.elements.draw(surface)
        
+    def print_text(self, now):
+        pass
+
     def update(self, keys, now):
-        if now - self.start_time == 0 or 9900 <= now - self.start_time <= 10000:
-            self.state = 'texting'
-            self.text_start_time = now
+        if not self.spaceship.is_alive:
+            self.done = True
+        self.print_text(now)
         if self.state == 'running':
             self.now = now
             self.spawnAsteroid()
@@ -82,12 +85,12 @@ class Stage(State):
                         self.text_counter = now
                         self.text_ch_num += 1
                         self.print_texts.empty()
-                        BasicText(self, 'ARCADECLASSIC', self.current_text[0:self.text_ch_num+1], 20, BLACK, [SCREENWIDTH//2, SCREENHEIGHT*4//5], (self.print_texts,))
+                        BasicText(self, '나눔손글씨 바른히피', self.current_text[0:self.text_ch_num+1], 20, BLACK, [SCREENWIDTH//2, SCREENHEIGHT*4//5], (self.print_texts,))
                     if self.text_ch_num >= len(self.current_text):
                         self.text_state = 'done'
                 if self.text_state == 'done':
                     self.print_texts.empty()
-                    BasicText(self, 'ARCADECLASSIC', self.current_text, 20, BLACK, [SCREENWIDTH//2, SCREENHEIGHT*4//5], (self.print_texts,))
+                    BasicText(self, '나눔손글씨 바른히피', self.current_text, 20, BLACK, [SCREENWIDTH//2, SCREENHEIGHT*4//5], (self.print_texts,))
             
             except IndexError:
                 self.state = 'running'
@@ -96,7 +99,7 @@ class Stage(State):
                     self.current_text_list_idx += 1
                     self.text_list = self.text_list_array[self.current_text_list_idx]
                 except IndexError:
-                    pass
+                    print(1)
                 self.text_ch_num = 0
                 self.text_num = 0
 
@@ -120,8 +123,6 @@ class Stage(State):
         hits = pygame.sprite.groupcollide(self.asteroids, self.bullets, True, True)
     
     def getEvent(self, event):
-        if not self.spaceship.is_alive:
-            self.done = True
         if self.state == 'texting':
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:

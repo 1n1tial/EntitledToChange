@@ -58,12 +58,12 @@ class PreStageText(State):
                     self.text_counter = now
                     self.text_ch_num += 1
                     self.elements.empty()
-                    BasicText(self, 'ARCADECLASSIC', self.current_text[0:self.text_ch_num+1], 20, BLACK, [SCREENWIDTH//2, SCREENHEIGHT*4//5], (self.elements,))
+                    BasicText(self, '나눔손글씨 바른히피', self.current_text[0:self.text_ch_num+1], 20, BLACK, [SCREENWIDTH//2, SCREENHEIGHT*4//5], (self.elements,))
                 if self.text_ch_num >= len(self.current_text):
                     self.text_state = 'done'
             if self.text_state == 'done':
                 self.elements.empty()
-                BasicText(self, 'ARCADECLASSIC', self.current_text, 20, BLACK, [SCREENWIDTH//2, SCREENHEIGHT*4//5], (self.elements,))
+                BasicText(self, '나눔손글씨 바른히피', self.current_text, 20, BLACK, [SCREENWIDTH//2, SCREENHEIGHT*4//5], (self.elements,))
         
         except IndexError:
             self.done = True
